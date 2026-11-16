@@ -1,6 +1,6 @@
 # Caltech Dining Choices — Vercel edition
 
-Standard Next.js App Router app for Vercel with Supabase Auth (email verification codes) and PostgreSQL. This replaces the earlier Cloudflare D1/ChatGPT authentication implementation. The existing hosted Sites version is not changed by this ZIP.
+Standard Next.js App Router app for Vercel with anonymous survey participation, Supabase Auth for admins, and PostgreSQL. This replaces the earlier Cloudflare D1/ChatGPT authentication implementation. The existing hosted Sites version is not changed by this ZIP.
 
 ## Deploy
 
@@ -23,14 +23,15 @@ Standard Next.js App Router app for Vercel with Supabase Auth (email verificatio
 
 All keys in this app are server-only. None needs a `NEXT_PUBLIC_` prefix. Use a separate Supabase project for preview/testing if you do not want preview submissions in the production database.
 
-## One response per verified email
+## Anonymous participation and storage
 
-- Participants receive an email code. The server verifies the authenticated user with Supabase, rather than trusting client IDs, browser storage, or forwarded identity headers.
-- An HMAC-SHA256 of the normalized verified email is used only in a separate participant ledger. A random anonymous UUID identifies the response and appears in exports. Plain emails are retained by Supabase Auth, not in response payloads.
-- The PostgreSQL submission function locks the participant row, inserts the response, and marks the account as submitted in one transaction. Concurrent requests and retry submissions cannot create a second response.
-- The same verified email maps to the same ledger entry across browsers, devices, and account recreation. **Do not rotate `PARTICIPANT_ID_SECRET` after collecting data**, because it defines that mapping.
-- Admin deletion is soft deletion: responses are excluded from reports and exports, but the participant submission lock remains.
-- This enforces one response per verified email, not one per human who controls multiple email addresses. Restricting `ALLOWED_EMAIL_DOMAIN` to `caltech.edu` reduces that risk, but is not student enrollment verification. Admin addresses are exempt from the optional domain restriction.
+Participants start immediately without signing in. A random, server-issued HttpOnly cookie identifies the browser. Supabase registers an anonymous response ID and atomically saves each submission once per browser. Clearing cookies, private browsing, or another device permits another submission; this does not enforce one response per person. Draft answers stay in browser local storage until submission.
+
+Submitted responses from all devices are stored centrally in the same **Supabase PostgreSQL database**, not in Vercel's filesystem. Vercel hosts the app and calls Supabase. Configure the same Supabase project for deployments that should share results. The database must be configured and `supabase/schema.sql` applied before collecting responses.
+
+For participant collection, only `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are required. Admin email sign-in additionally uses `SUPABASE_PUBLISHABLE_KEY`, `PARTICIPANT_ID_SECRET` (at least 32 characters), `ADMIN_EMAILS`, and the Supabase email provider setup above. Participant email restrictions do not apply to anonymous submissions.
+
+Admin deletion hides a response from reports and exports but retains that browser's submission lock. Existing response tables and schema are compatible; no migration is required.
 
 ## Multiple admins
 
@@ -72,7 +73,7 @@ npm run build
 
 Tests include exact wait-statistic fixtures, grouping, empty/single-observation cases, nonmonotonic choices, ranking/exclusion cases, multiple-admin policy, actual PostgreSQL schema/functions in PGlite, duplicate/wrong-ID rejection, deletion lock retention, database permissions, and actual API route authorization with mocked authentication.
 
-The production Next.js build and these automated tests were run. Real email delivery, Supabase-hosted sign-in, and your Vercel deployment require your credentials and must be verified after setup. Smoke-test with a test participant: submit, sign out, sign in on another browser, verify submission is blocked; confirm a non-admin cannot view results/delete, and two allowlisted admins can.
+The production Next.js build and these automated tests were run. Real email delivery, Supabase-hosted sign-in, and your Vercel deployment require your credentials and must be verified after setup. Smoke-test with a test participant: submit and reload to verify the browser cannot submit again; verify another browser can submit; confirm a non-admin cannot view results/delete, and two allowlisted admins can.
 
 ## Existing data
 
