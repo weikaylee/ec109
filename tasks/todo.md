@@ -1,9 +1,8 @@
-# Results summary
+# Ranked results only
 
-- [x] Show four wait statistics overall and by comparison, house, and year.
-- [x] Include comparison groups within houses and years; remove bins and acceptance columns.
-- [x] Tests, type checking, and production build passed.
-- [ ] Commit and push.
+- [x] Remove version selector and restrict dashboard to version 2.
+- [x] Type checking and production build passed.
+- [ ] Commit/push.
 
 ## Review
-Comparison groups are the named meal comparisons. Statistics retain the longest extra wait per meal pair.
+Legacy records remain in the database but are excluded from this dashboard and exports.

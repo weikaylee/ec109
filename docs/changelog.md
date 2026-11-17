@@ -36,3 +36,7 @@
 - Show median, mean, 5th and 95th percentiles overall and by meal comparison, house, and year.
 - Include meal comparison breakdowns within each house and year in tables and summary exports.
 - Remove acceptance-share and wait-bin columns and the distribution chart.
+
+## Ranked results only
+
+- Removed the survey-version selector; results, exports, and response management show ranked-meal version 2 only. Existing legacy database records are retained.
