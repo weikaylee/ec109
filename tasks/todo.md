@@ -1,11 +1,9 @@
-# Public results page
+# Food options and rank spacing
 
-- [x] Remove dashboard authentication and footer navigation.
-- [x] Allow results reads and deletion; retain origin checks and confirmation.
-- [x] Verify tests, types, and production build.
+- [x] Update eight options and dynamic validation.
+- [x] Reset incompatible local drafts and include rank gap seven in results.
+- [x] Inset dropdown arrow.
+- [x] Run verification.
 
 ## Review
-
-Anyone knowing /results can view, export, and delete responses, as requested. No schema change.
-
-Tests, type checking, and production build passed. Changes are local; deployment has not been verified.
+Tests, type checking, and production build passed. Saved responses retain their original food labels.

@@ -57,7 +57,7 @@ Ranks are ordinal positions, not preference intensity. Rank gap bands retain the
 
 ## Survey behavior
 
-Seven unique ranks, 1 = favorite. Exclusions compact the remaining ranks. Fourth/fifth eligible meals become Middle A/B; unavailable or identical-meal comparisons are skipped. All-excluded responses proceed to demographics. Randomized comparison order is saved. Waits: 2, 4, 7, 10, 14, 17, 22, 27, 32 minutes, against a fixed 2-minute wait.
+Eight unique ranks, 1 = favorite. Exclusions compact the remaining ranks. Fourth/fifth eligible meals become Middle A/B; unavailable or identical-meal comparisons are skipped. All-excluded responses proceed to demographics. Randomized comparison order is saved. Waits: 2, 4, 7, 10, 14, 17, 22, 27, 32 minutes, against a fixed 2-minute wait.
 
 ## Local development and tests
 

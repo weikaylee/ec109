@@ -24,3 +24,9 @@
 - Results, exports, and confirmed deletion are available at `/results` without authentication.
 - Removed survey footer navigation to results and dashboard sign-in controls.
 - Retained same-origin checks for deletion and private database permissions.
+
+## Updated menu
+
+- Use Pho, Udon, Curry, Mongo, Pizza, Grill, Pasta, and Orange chicken.
+- Support eight ranks and rank gaps through seven; reset outdated browser drafts.
+- Add space between rank dropdown arrows and their right borders.
