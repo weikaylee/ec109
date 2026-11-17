@@ -1,9 +1,9 @@
-# Food options and rank spacing
+# Results summary
 
-- [x] Update eight options and dynamic validation.
-- [x] Reset incompatible local drafts and include rank gap seven in results.
-- [x] Inset dropdown arrow.
-- [x] Run verification.
+- [x] Show four wait statistics overall and by comparison, house, and year.
+- [x] Include comparison groups within houses and years; remove bins and acceptance columns.
+- [x] Tests, type checking, and production build passed.
+- [ ] Commit and push.
 
 ## Review
-Tests, type checking, and production build passed. Saved responses retain their original food labels.
+Comparison groups are the named meal comparisons. Statistics retain the longest extra wait per meal pair.

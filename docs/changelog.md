@@ -30,3 +30,9 @@
 - Use Pho, Udon, Curry, Mongo, Pizza, Grill, Pasta, and Orange chicken.
 - Support eight ranks and rank gaps through seven; reset outdated browser drafts.
 - Add space between rank dropdown arrows and their right borders.
+
+## Results summary tables
+
+- Show median, mean, 5th and 95th percentiles overall and by meal comparison, house, and year.
+- Include meal comparison breakdowns within each house and year in tables and summary exports.
+- Remove acceptance-share and wait-bin columns and the distribution chart.
