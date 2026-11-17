@@ -1,12 +1,11 @@
-# Remove participant sign-in
+# Public results page
 
-- [x] Replace participant email authentication with a server-issued browser cookie.
-- [x] Keep results and deletion restricted to signed-in admins.
-- [x] Update survey copy and setup documentation.
-- [x] Verify anonymous submission, duplicate protection, and admin authorization.
+- [x] Remove dashboard authentication and footer navigation.
+- [x] Allow results reads and deletion; retain origin checks and confirmation.
+- [x] Verify tests, types, and production build.
 
 ## Review
 
-Responses remain in Supabase. Browser cookies cannot enforce one response per person across devices.
+Anyone knowing /results can view, export, and delete responses, as requested. No schema change.
 
-Verification: automated tests, TypeScript checks, and production build passed. Live collection still requires real Supabase environment settings.
+Tests, type checking, and production build passed. Changes are local; deployment has not been verified.

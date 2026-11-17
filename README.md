@@ -19,7 +19,7 @@ Standard Next.js App Router app for Vercel with anonymous survey participation, 
 | `ADMIN_EMAILS` | Comma-separated email addresses, e.g. `alice@caltech.edu,bob@caltech.edu` |
 | `ALLOWED_EMAIL_DOMAIN` | Optional: `caltech.edu`; leave empty to allow any verified email |
 
-6. Redeploy after setting/changing environment variables. Sign in at `/login` with an allowlisted admin email, then open `/results`.
+6. Redeploy after setting/changing environment variables. Open `/results` directly.
 
 All keys in this app are server-only. None needs a `NEXT_PUBLIC_` prefix. Use a separate Supabase project for preview/testing if you do not want preview submissions in the production database.
 
@@ -33,11 +33,11 @@ For participant collection, only `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` 
 
 Admin deletion hides a response from reports and exports but retains that browser's submission lock. Existing response tables and schema are compatible; no migration is required.
 
-## Multiple admins
+## Research results access
 
-Set `ADMIN_EMAILS` to any number of comma-separated verified addresses. Comparisons are case-insensitive with whitespace trimmed. Missing/empty configuration grants nobody admin access. Each admin signs in with their own email code; no shared admin password is used. Update the Vercel variable and redeploy to add/remove admins. Every results/export/delete request rechecks the server-side allowlist. Visitors cannot promote themselves through profile metadata or request parameters.
+Open `/results` directly to view results, export CSV files, or delete responses after confirmation. No sign-in is required. Anyone who knows or guesses this URL can perform these actions. The survey does not link to it.
 
-The tables have Row Level Security enabled and no public policies. Anonymous/authenticated database roles cannot read or modify them or execute submission functions. Only the Vercel server's service-role key can access them; route authorization still checks each user before access.
+The server uses the Supabase service-role key; database tables remain private to direct anonymous database requests. Only `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are needed for survey collection and results. Email authentication settings are not required for this flow.
 
 ## What the statistics mean
 
@@ -85,3 +85,14 @@ The prior hosted Site's database is not included or automatically migrated. Expo
 - https://supabase.com/docs/guides/auth/server-side/creating-a-client
 - https://supabase.com/docs/guides/database/postgres/row-level-security
 - https://vercel.com/docs/frameworks/full-stack/nextjs
+
+## Repair a deployed database session error
+
+If the homepage says it could not load the survey, inspect `/api/session` on that deployment. It returns HTTP 503 when storage is unavailable; no response has been saved by loading the page.
+
+- `STORAGE_SCHEMA`: Open the Supabase project matching Vercel's `SUPABASE_URL`. In SQL Editor run the entire `supabase/schema.sql` file. It creates the participant/response tables, both RPC functions, and service-role permissions. It can be rerun without deleting existing responses. If needed, run `NOTIFY pgrst, 'reload schema';` afterward.
+- `STORAGE_ACCESS`: Set Vercel's `SUPABASE_SERVICE_ROLE_KEY` to the server-side service-role (or secret API) key from that same project. A publishable/anon key cannot access these private tables and functions. Rerun the schema to restore grants if necessary. Redeploy after changing Vercel environment variables.
+- `STORAGE_CONNECTION`: Check that the Supabase project is running and the URL is correct.
+- `STORAGE_UNAVAILABLE`: Inspect Vercel runtime logs for `Survey session failed`. Do not share secret keys.
+
+Once repaired, reload the survey, submit a test response, and verify it appears in Supabase's `responses` table. Never collect real responses until that end-to-end check succeeds.
