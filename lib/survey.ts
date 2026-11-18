@@ -1,6 +1,6 @@
 export const MEALS=['Pho','Udon','Curry','Mongo','Pizza','Grill','Pasta','Orange chicken'];
 export const YEARS=['First-year','Sophomore','Junior','Senior','Super Senior'];
-export const HOUSES=['Avery','Blacker','Dabney','Ricketts','Fleming','Page','Venerable','Bechtel','Marks/Braun','Unaffiliated'];
+export const HOUSES=['Avery','Blacker','Dabney','Ricketts','Fleming','Lloyd','Page','Venerable','Bechtel','Marks/Braun','Unaffiliated'];
 export const WAITS=[2,4,7,10,14,17,22,27,32];
 export const LABELS=['Favorite vs. least favorite','Favorite vs. middle','Middle vs. middle','Middle vs. least favorite'];
 export type Pair={kind:number,a:string,b:string,inc:string,choices:string[]};

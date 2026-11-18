@@ -40,3 +40,7 @@
 ## Ranked results only
 
 - Removed the survey-version selector; results, exports, and response management show ranked-meal version 2 only. Existing legacy database records are retained.
+
+## Lloyd house option
+
+- Added Lloyd to the shared house list used by the survey, submission validation, and results breakdowns.

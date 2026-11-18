@@ -1,8 +1,7 @@
-# Ranked results only
+# Lloyd house option
 
-- [x] Remove version selector and restrict dashboard to version 2.
-- [x] Type checking and production build passed.
-- [ ] Commit/push.
+- [x] Add Lloyd to the shared house list.
+- [x] Verified Lloyd submission validation, full automated tests, and type checking.
 
 ## Review
-Legacy records remain in the database but are excluded from this dashboard and exports.
+The survey and results both use the shared list; no database migration is required.
